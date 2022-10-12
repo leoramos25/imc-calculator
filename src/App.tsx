@@ -1,6 +1,6 @@
 import './App.css'
 
-function App() {
+export function App() {
   return (
     <h1>IMC Calculator</h1>
   )
