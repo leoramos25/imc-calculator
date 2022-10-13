@@ -15,7 +15,7 @@ export const levels: Level[] = [
     },
     {
         title: 'Normal',
-        color: '#0AEAD69',
+        color: '#0EAD69',
         icon: 'up',
         imc: [18.6, 24.9]
     },
