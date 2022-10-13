@@ -1,19 +1,27 @@
 import { useState } from 'react';
 import styles from './App.module.css';
 import poweredImage from './assets/powered.png';
+import leftArrow from './assets/leftarrow.png';
 import { GridItem } from './components/GridItem';
-import { levels } from './helpers/imc';
+import { calculate, Level, levels } from './helpers/imc';
 
 export function App() {
   const [heightField, setHeightField] = useState<number>(0);
   const [weightField, setWeightField] = useState<number>(0);
+  const [toShow, setToShow] = useState<Level | null>(null);
 
   function handleCalculateButton() {
     if (heightField && weightField) {
-
+      setToShow(calculate(heightField, weightField));
     } else {
       alert('Campos não preenchidos');
     }
+  }
+
+  function handleBackButton() {
+    setToShow(null);
+    setHeightField(0);
+    setWeightField(0);
   }
 
   return (
@@ -46,11 +54,21 @@ export function App() {
           <button onClick={handleCalculateButton}>Calcular</button>
         </div>
         <div className={styles.rightSide}>
-          <div className={styles.grid}>
-            {levels.map((item, index) => (
-              <GridItem key={index} item={item} />
-            ))}
-          </div>
+          {!toShow &&
+            <div className={styles.grid}>
+              {levels.map((item, index) => (
+                <GridItem key={index} item={item} />
+              ))}
+            </div>
+          }
+          {toShow &&
+            <div className={styles.rightBig}>
+              <div className={styles.rightArrow} onClick={handleBackButton}>
+                <img src={leftArrow} alt="left arrow" width={25} />
+              </div>
+              <GridItem item={toShow} />
+            </div>
+          }
         </div>
       </div>
     </div>
